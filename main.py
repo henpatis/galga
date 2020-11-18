@@ -1,6 +1,6 @@
-controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
-    
-    dart = sprites.createProjectileFromSprite(img`
+def on_a_pressed():
+    global dart
+    dart = sprites.create_projectile_from_sprite(img("""
             . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
@@ -17,21 +17,27 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . .
-        `, mySprite, 200, 0)
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function on_on_overlap(sprite: Sprite, otherSprite: Sprite) {
+        """),
+        mySprite,
+        200,
+        0)
+controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
+
+def on_on_overlap(sprite, otherSprite):
     otherSprite.destroy()
     sprite.destroy(effects.fire, 100)
-    info.changeScoreBy(1)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_on_overlap2(sprite: Sprite, otherSprite: Sprite) {
+    info.change_score_by(1)
+sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
+
+def on_on_overlap2(sprite, otherSprite):
     mySprite.destroy()
-    info.changeLifeBy(-1)
-})
-let mySprite2 : Sprite = null
-let dart : Sprite = null
-let mySprite : Sprite = null
-mySprite = sprites.create(img`
+    info.change_life_by(-1)
+sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, on_on_overlap2)
+
+mySprite2: Sprite = None
+dart: Sprite = None
+mySprite: Sprite = None
+mySprite = sprites.create(img("""
         . . . . . . . . . . . . . . . . 
             . . . . . . 8 8 . . . . . . . . 
             . . 8 2 . . 8 8 . . . . . . . . 
@@ -48,13 +54,15 @@ mySprite = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . .
-    `, SpriteKind.Player)
-mySprite.setFlag(SpriteFlag.StayInScreen, true)
-info.setLife(3)
-controller.moveSprite(mySprite, 200, 200)
-game.onUpdateInterval(500, function on_update_interval() {
-    
-    mySprite2 = sprites.create(img`
+    """),
+    SpriteKind.player)
+mySprite.set_flag(SpriteFlag.STAY_IN_SCREEN, True)
+info.set_life(3)
+controller.move_sprite(mySprite, 200, 200)
+
+def on_update_interval():
+    global mySprite2
+    mySprite2 = sprites.create(img("""
             . . . . . . . . 2 . . . . . . . 
                     . . . . . . . 2 4 . . . . . . . 
                     . . . . . . . 4 2 . . . . . . . 
@@ -71,7 +79,8 @@ game.onUpdateInterval(500, function on_update_interval() {
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . .
-        `, SpriteKind.Enemy)
-    mySprite2.setVelocity(-100, 0)
-    mySprite2.setPosition(180, randint(0, 120))
-})
+        """),
+        SpriteKind.enemy)
+    mySprite2.set_velocity(-100, 0)
+    mySprite2.set_position(180, randint(0, 120))
+game.on_update_interval(500, on_update_interval)
