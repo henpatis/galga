@@ -40,6 +40,24 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Player)
+    mySprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 8 8 . . . . . . . . 
+        . . 8 2 . . 8 8 . . . . . . . . 
+        . . 1 1 1 . 8 8 . . 9 9 9 9 9 . 
+        . . 2 2 2 2 8 8 . 9 9 9 9 9 9 9 
+        . . f 8 6 6 6 6 6 6 9 9 9 9 9 9 
+        . . . . . . 2 2 . . . . . . . . 
+        . . . . . . 2 2 . . . . . . . . 
+        . . . . . . 2 2 . . . . . . . . 
+        . . . . . . 2 2 . . . . . . . . 
+        . . . . . . 2 2 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     mySprite.destroy()
